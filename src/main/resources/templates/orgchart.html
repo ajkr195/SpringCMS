@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{layouts/layout_orgchart}">
+<head>
+<title>Springboot Rocks</title>
+</head>
+
+<body class="d-flex flex-column h-100">
+	<div layout:fragment="content">
+
+
+		<nav
+			class="navbar navbar-expand py-0 navbar-dark bg-dark navbar-custom">
+			<div class="container-fluid">
+				<div class="col-md-6 float-start">
+					<h4 class="m-0 text-danger">
+						Org Chart
+						</h4>
+				</div>
+				<div class="col-md-6 align-middle mt-3">
+					<ol class="breadcrumb float-end">
+						<li class="breadcrumb-item text-danger"><a href="/"
+							th:href="@{/}"> Home</a></li>
+						<li class="breadcrumb-item active">Org Chart</li>
+					</ol>
+				</div>
+			</div>
+		</nav>
+
+
+		<div class="row">
+			<div class="col-12 col-md-12 col-lg-12">
+				<div class="card themed-card">
+					<!-- 					<div class="card-header card-header-nobg"> -->
+					<!-- 						<div class="d-flex align-items-center justify-content-between"> -->
+					<!-- 							<h3 class="float-start">My Profile</h5> -->
+					<!-- 						</div> -->
+
+					<!-- 					</div> -->
+					<div class="card-content">
+
+						<div id="wrapper">
+							<div id="container">
+
+								<ol class="organizational-chart">
+									<li>
+										<div>
+											<h5>Primary</h5>
+										</div> <!--	<div> --> <!--		<h5>Primary</h5> --> <!--	</div> --> <!--	<div> -->
+										<!--		<h5>Primary</h5> --> <!--	</div> -->
+										<ol>
+											<li>
+												<div>
+													<h5>Secondary</h5>
+												</div>
+												<ol>
+													<li>
+														<div>
+															<h5>Tertiary</h5>
+														</div>
+													</li>
+													<li>
+														<div>
+															<h5>Tertiary</h5>
+														</div>
+														<ol>
+															<li>
+																<div>
+																	<h5>Quaternary</h5>
+																</div>
+															</li>
+															<li>
+																<div>
+																	<h5>Quaternary</h5>
+																</div>
+																<ol>
+																	<li>
+																		<div>
+																			<h5>Quinary</h5>
+																		</div>
+																	</li>
+																	<li>
+																		<div>
+																			<h5>Quinary</h5>
+																		</div>
+																		<ol>
+																			<li>
+																				<div>
+																					<h6>Senary</h6>
+																				</div>
+																			</li>
+																		</ol>
+																	</li>
+																</ol>
+															</li>
+															<li>
+																<div>
+																	<h5>Quaternary</h5>
+																</div>
+															</li>
+														</ol>
+													</li>
+													<li>
+														<div>
+															<h5>Tertiary</h5>
+														</div>
+													</li>
+												</ol>
+											</li>
+											<li>
+												<div>
+													<h5>Secondary</h5>
+												</div>
+												<ol>
+													<li>
+														<div>
+															<h5>Tertiary</h5>
+														</div>
+													</li>
+													<li>
+														<div>
+															<h5>Tertiary</h5>
+														</div>
+														<ol>
+															<li>
+																<div>
+																	<h5>Quaternary</h5>
+																</div>
+															</li>
+															<li>
+																<div>
+																	<h5>Quaternary</h5>
+																</div>
+															</li>
+															<li>
+																<div>
+																	<h5>Quaternary</h5>
+																</div>
+															</li>
+														</ol>
+													</li>
+												</ol>
+											</li>
+											<li>
+												<div>
+													<h5>Secondary</h5>
+												</div>
+												<ol>
+													<li>
+														<div>
+															<h5>Tertiary</h5>
+														</div>
+														<ol>
+															<li>
+																<div>
+																	<h5>Quaternary</h5>
+																</div>
+																<ol>
+																	<li>
+																		<div>
+																			<h5>Quinary</h5>
+																		</div>
+																		<ol>
+																			<li>
+																				<div>
+																					<h6>Senary</h6>
+																				</div>
+																			</li>
+																			<li>
+																				<div>
+																					<h6>Senary</h6>
+																				</div>
+																			</li>
+																		</ol>
+																	</li>
+																	<li>
+																		<div>
+																			<h5>Quinary</h5>
+																		</div>
+																	</li>
+																</ol>
+															</li>
+														</ol>
+													</li>
+													<li>
+														<div>
+															<h5>Tertiary</h5>
+														</div>
+													</li>
+													<li>
+														<div>
+															<h5>Tertiary</h5>
+														</div>
+													</li>
+												</ol>
+											</li>
+											<li>
+												<div>
+													<h5>Secondary</h5>
+												</div>
+												<ol>
+													<li>
+														<div>
+															<h5>Tertiary</h5>
+														</div>
+													</li>
+													<li>
+														<div>
+															<h5>Tertiary</h5>
+														</div>
+													</li>
+													<li>
+														<div>
+															<h5>Tertiary</h5>
+														</div>
+														<ol>
+															<li>
+																<div>
+																	<h5>Quaternary</h5>
+																</div>
+															</li>
+															<li>
+																<div>
+																	<h5>Quaternary</h5>
+																</div>
+															</li>
+														</ol>
+													</li>
+													<li>
+														<div>
+															<h5>Tertiary</h5>
+														</div>
+													</li>
+													<li>
+														<div>
+															<h5>Tertiary</h5>
+														</div>
+													</li>
+												</ol>
+											</li>
+										</ol>
+									</li>
+								</ol>
+
+							</div>
+						</div>
+
+
+
+
+
+					</div>
+
+				</div>
+			</div>
+		</div>
+
+
+
+
+		<div class="modal fade" id="profilePicModal" tabindex="-1"
+			aria-labelledby="profilePicModalLabel" aria-hidden="true">
+			<div class="modal-dialog modal-dialog-centered">
+				<div class="modal-content">
+					<div class="modal-header modal-header-danger">
+						<h5 class="modal-title" id="exampleModalLabel">Update Profile
+							Picture</h5>
+						<button type="button" class="btn-close close"
+							data-bs-dismiss="modal" aria-label="Close"></button>
+					</div>
+					<form action="/appUserProfile/${currentUserId}/image" )
+						method="post" enctype="multipart/form-data"
+						th:action="@{'/appUserProfile/' + ${currentUserId} + '/image'}">
+						<div class="modal-body">
+
+							<label class="control-label">Select Picture</label> <input
+								id="userPicturefile" name="userPicturefile" type="file"
+								class="file"> <br /> <br />
+
+						</div>
+						<div class="modal-footer">
+							<button type="button" class="btn btn-sm btn-secondary"
+								data-bs-dismiss="modal">Close</button>
+							<button type="submit" class="btn btn-sm btn-danger">Update
+								Picture</button>
+						</div>
+					</form>
+				</div>
+			</div>
+		</div>
+
+
+
+
+
+	</div>
+
+
+
+</body>
+</html>

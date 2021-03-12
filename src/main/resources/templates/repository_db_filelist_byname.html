@@ -1,0 +1,357 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{layouts/layout_dbfiles_byname}">
+<head>
+<title
+	th:text="${#httpServletRequest.getRequestURI().contains('/userEdit') ? 'User Add/Edit':''}"></title>
+
+</head>
+
+<div layout:fragment="content">
+
+
+	<nav
+		class="navbar navbar-expand py-0 navbar-dark bg-dark navbar-custom mb-3">
+		<div class="container-fluid">
+			<div class="col-md-4 expandSearchBar float-start">
+				<h4 class="m-0 text-danger">Repository Files</h4>
+
+			</div>
+			<!-- 			<div class="col-md-5"> -->
+			<form th:action="@{/dbFilesListByName}" autocomplete="off"
+				id="dbfilesearchform" name="dbfilesearchform"
+				class="search-form-global py-0">
+				<input id="filename" type="text" name="filename"
+					class="form-control"
+					th:value="${#request.getParameter('filename')}"
+					placeholder="Global Search..." required />
+				<button type="submit">
+					<i class="fas fa-search navbar-search-icon text-danger"></i>
+				</button>
+			</form>
+			<!-- 			</div> -->
+			<div class="col-md-4 align-middle expandSearchBar mt-3">
+				<ol class="breadcrumb float-end">
+					<li class="breadcrumb-item text-danger"><a href="/"
+						th:href="@{/}"> Home</a></li>
+					<li class="breadcrumb-item active">Repository Files</li>
+				</ol>
+			</div>
+		</div>
+	</nav>
+
+	<div class="searchcontainer" id="searchcontainer">
+
+		<div class="accordion accordion-flush" id="accordionFlushExample">
+			<div class="card themed-card">
+				<div class="accordion-item">
+					<h2 class="accordion-header" id="flush-headingOne">
+						<button class="accordion-button collapsed" type="button"
+							data-bs-toggle="collapse" data-bs-target="#flush-collapseOne"
+							aria-expanded="false" aria-controls="flush-collapseOne">
+							<h5 class="fw-bold text-primary">Click here for Advanced
+								Search</h5>
+						</button>
+					</h2>
+					<div id="flush-collapseOne" class="accordion-collapse collapse"
+						aria-labelledby="flush-headingOne"
+						data-bs-parent="#accordionFlushExample">
+						<div class="accordion-body" id="tobeCloned">
+
+							<div class="row">
+								<div class="input-group clonethisdiv mb-3" id="clonethisdiv">
+									<input type="text" class="form-control"
+										placeholder="Metadata1.." aria-label="Metadata">
+									<!-- 								 <span class="input-group-text">@</span> -->
+									<select class="form-select" aria-label="Default select example">
+										<option selected>Select</option>
+										<option value="1">Equals</option>
+										<option value="2">Contains</option>
+										<option value="3">StartsWith</option>
+										<option value="3">EndsWith</option>
+									</select> <input type="text" class="form-control" placeholder="Value..."
+										aria-label="Value"> <select class="form-select"
+										aria-label="Default select example">
+										<option selected>Select</option>
+										<option value="1">AND</option>
+										<option value="2">OR</option>
+									</select> <input type="text" class="form-control" placeholder="Value..."
+										aria-label="Value">
+								</div>
+
+
+								<br> <span id="fooBar"> </span>
+
+
+
+								<div class="btn-group">
+									<div class="col-md-6">
+										<input type="button"
+											class="btn btn-sm btn-success col-md-3 mt-2 float-start"
+											value="Add More Fields" onclick="addMoreSearchFields()" />
+									</div>
+									<div class="col-md-6">
+										<input type="submit"
+											class="btn btn-primary col-md-3 mt-2 float-end"
+											value="Submit">
+									</div>
+								</div>
+
+
+
+
+
+							</div>
+
+
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+
+
+
+
+		<!-- 		<button onclick="cloneTheSearchDiv()">Try it</button> -->
+
+	</div>
+
+
+	<div class="row">
+		<div class="col-12 col-md-12 col-lg-12">
+			<div class="card themed-card card-fullheight">
+				<div class="card-header card-header-nobg">
+					<div class="d-flex align-items-center justify-content-between">
+						<h3 class="float-start">Repository Files</h3>
+
+
+						<div class="col-sm-1" th:if="${allfiles.totalPages != 0}">
+							<select class="form-select form-select-sm pagination"
+								id="pageSizeSelect">
+								<option selected disabled value="itemsperpage">Size</option>
+								<option th:each="pageSize : ${pageSizes}" th:value="${pageSize}"
+									th:text="${pageSize}"
+									th:selected="${pageSize} == ${selectedPageSize}"></option>
+							</select>
+						</div>
+
+						<div class="col-sm-3" th:if="${allfiles.totalPages != 0}">
+							<a class="btn btn-sm btn-primary" aria-current="page" href="#"
+								id="backToList" th:href="@{/dbFilesList}"><i
+								class="fas fa-long-arrow-alt-left"></i> Back To Files List</a>
+						</div>
+
+						<!-- 						<div th:if="${#httpServletRequest.requestURI == '/dbFilesList'}"> -->
+
+
+						<a class="btn btn-sm btn-success float-end"
+							th:href="@{'/addDocument/' + ${appUserId}}"
+							data-bs-toggle="modal" data-bs-target="#uploadFilesModal"><i
+							class="fas fa-plus"></i> Upload Files</a>
+
+
+					</div>
+
+				</div>
+
+
+
+
+				<div class="card-content">
+
+
+					<div th:if="${allfiles.totalPages != 0}">
+
+						<input id="tableFilterInput" type="text"
+							class="dbfilesTable-filter" dbFiles-data-table="dbfilesTable"
+							placeholder="Type to search ..." /> <i
+							class="fas fa-search text-primary" id="tableFilterInputbtn"></i>
+
+						<div class="table-reponsive">
+							<table id="dbFilesTable" class="table table-hover dbfilesTable"
+								style="width: 100%">
+								<thead>
+									<tr>
+										<!-- <th>#</th> -->
+										<!--<th>Id</th> -->
+										<th>Name</th>
+										<th>Type</th>
+										<th>Size</th>
+										<th>CreatedBy</th>
+										<th>DateCreated</th>
+										<th>ModifiedBy</th>
+										<th>LastModified</th>
+										<th>Actions</th>
+									</tr>
+								</thead>
+								<tbody>
+									<tr th:each="dbfile,rowStat : ${allfiles}">
+										<!-- 								<td th:text="${rowStat.count}">1</td> -->
+										<!--<td th:text="${dbfile.id}"></td> -->
+										<td th:text="${dbfile.filename}"></td>
+										<td th:text="${dbfile.mimetype}"></td>
+										<td th:text="${dbfile.filesize}"></td>
+										<td th:text="${dbfile.createdBy}"></td>
+										<td th:text="${dbfile.createdDate}"></td>
+										<td th:text="${dbfile.lastModifiedBy}"></td>
+										<td th:text="${dbfile.lastModifiedDate}"></td>
+										<td><div class="btn-group">
+												<a class="btn btn-sm btn-info"
+													th:href="@{/viewTheFile/{uuid}(uuid=${dbfile.documentuuid})}"
+													target="_blank"><i class="fas fa-eye"></i> </a><a
+													class="btn btn-sm btn-success mx-2"
+													th:href="${'/files/' + dbfile.documentuuid}"><i
+													class="fas fa-cloud-download-alt"> </i> </a> <a
+													th:href="@{'/deleteDocument/' + ${dbfile.documentuuid}}"
+													class="btn btn-sm btn-danger mr-2 delBtn"
+													id="open-modal-userdelete-btn"><i
+													class="fas fa-times-circle"></i></a>
+											</div></td>
+									</tr>
+								</tbody>
+								<tfoot>
+									<tr>
+										<!-- <th>#</th> -->
+										<!--<th>Id</th> -->
+										<th>Name</th>
+										<th>Type</th>
+										<th>Size</th>
+										<th>CreatedBy</th>
+										<th>DateCreated</th>
+										<th>ModifiedBy</th>
+										<th>LastModified</th>
+										<th>Action</th>
+									</tr>
+								</tfoot>
+							</table>
+						</div>
+
+
+
+
+
+						<div class="row col-md-12">
+							<div class="col-md-6 mt-2 float-start">
+								<span class="badge btn-danger"> Total Records:</span> <span
+									class="badge btn-primary" th:text="${totaldbfiles}"> </span>
+							</div>
+							<div class="col-md-6 float-end">
+								<div th:if="${allfiles.totalPages != 0}"
+									class="pagination-container float-end">
+									<ul class="pagination">
+										<li th:class="${allfiles.number == 0} ? disabled"><a
+											class="btn btn-sm btn-darkfuchsia mx-1"
+											th:href="@{/dbFilesListByName/(filename=${#request.getParameter('filename')},pageSize=${selectedPageSize}, page=1)}"><i
+												class="fas fa-fast-backward"></i></a></li>
+										<li th:class="${allfiles.number == 0} ? disabled"><a
+											class="btn btn-sm btn-midfuchsia mx-1"
+											th:href="@{/dbFilesListByName/(filename=${#request.getParameter('filename')},pageSize=${selectedPageSize}, page=${allfiles.number})}"><i
+												class="fas fa-arrow-left"></i></a></li>
+
+
+										<li
+											th:if="${(allfiles.totalPages) gt 9 && (allfiles.totalPages-allfiles.number le (allfiles.totalPages - 4))}"
+											class="page-item"><a
+											class="btn btn-sm btn-info mx-1 disabled">...</a></li>
+
+										<li
+											th:class="${allfiles.number == (page - 1)} ? 'active pointer-disabled'"
+											th:each="page : ${#numbers.sequence(pager.startPage, pager.endPage)}">
+											<a class="btn btn-sm btn-info mx-1"
+											th:href="@{/dbFilesListByName/(filename=${#request.getParameter('filename')},pageSize=${selectedPageSize}, page=${page})}"
+											th:text="${page}"></a>
+										</li>
+
+										<li th:if="${(allfiles.totalPages) gt 9 && (allfiles.totalPages-allfiles.number gt 4)}"
+											class="page-item"><a
+											class="btn btn-sm btn-info mx-1 disabled">...</a></li>
+
+										<!-- 										<li -->
+										<!-- 											th:if="${(allfiles.number gt 4) && (allfiles.totalPages-allfiles.number gt 3)}" -->
+										<!-- 											class="page-item"><a -->
+										<!-- 											class="btn btn-sm btn-info mx-2 disabled">....</a></li> -->
+
+
+										<li
+											th:class="${allfiles.number + 1 == allfiles.totalPages} ? disabled">
+											<a class="btn btn-sm btn-midfuchsia mx-1"
+											th:href="@{/dbFilesListByName/(filename=${#request.getParameter('filename')},pageSize=${selectedPageSize}, page=${allfiles.number + 2})}"><i
+												class="fas fa-arrow-right"></i></a>
+										</li>
+										<li
+											th:class="${allfiles.number + 1 == allfiles.totalPages} ? disabled">
+											<a class="btn btn-sm btn-darkfuchsia mx-1"
+											th:href="@{/dbFilesListByName/(filename=${#request.getParameter('filename')},pageSize=${selectedPageSize}, page=${allfiles.totalPages})}"><i
+												class="fas fa-fast-forward"></i></a>
+										</li>
+									</ul>
+								</div>
+							</div>
+						</div>
+
+
+					</div>
+
+					<div th:if="${allfiles.totalPages == 0}">
+						<h3 class=" text-primary text-center mt-5">No files have been
+							added yet to this repository !</h3>
+
+						<h3 class=" text-success text-center mt-5">Click Upload to
+							upload files !</h3>
+					</div>
+
+
+
+					<div class="modal fade" id="uploadFilesModal" tabindex="-1"
+						aria-labelledby="uploadFilesModalLabel" aria-hidden="true">
+						<div class="modal-dialog modal-dialog-centered">
+							<div class="modal-content">
+								<div class="modal-header modal-header-danger">
+									<h5 class="modal-title" id="exampleModalLabel">Upload
+										Files</h5>
+									<button type="button" class="btn-close close"
+										data-bs-dismiss="modal" aria-label="Close"></button>
+								</div>
+								<div class="card themed-card">
+									<div class="card-header card-header-nobg">
+										<div class="d-flex align-items-center">
+											<h4 class="float-start">Select and Upload Files</h4>
+										</div>
+									</div>
+									<div class="card-content">
+										<form th:action="@{'/addDocumentModal/' + ${appUserId}}"
+											method="POST" class="form-group needs-validation mt-2"
+											id="fileUploadForm" name="multipleUploadForm"
+											enctype="multipart/form-data" novalidate>
+											<input id="multipleFileUploadInput" type="file" name="files"
+												class="file-input" multiple required />
+											<button type="submit"
+												class="btn btn-sm btn-success submit-btn">
+												<i class="fas fa-cloud-upload-alt"></i> Upload
+											</button>
+											<div class="invalid-feedback">Please select at least
+												one file.</div>
+										</form>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+
+				</div>
+
+
+			</div>
+		</div>
+	</div>
+
+
+
+
+</div>
+
+</body>
+
+</html>

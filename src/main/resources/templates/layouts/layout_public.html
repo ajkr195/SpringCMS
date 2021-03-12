@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport"
+	content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<title th:text="${metaTitle} ? ${metaTitle} : 'default title'"></title>
+
+<link rel="stylesheet" th:href="@{/webjars/font-awesome/css/all.css}">
+<link rel="stylesheet"
+	th:href="@{/webjars/bootstrap/css/bootstrap.min.css}" />
+<link rel="stylesheet" th:href="@{/css/main.css}">
+</head>
+<body>
+	<main class="flex-shrink-0">
+		<div class="wrapper">
+
+
+			<div id="content">
+
+				<div th:replace="fragments/header_public :: header_public"></div>
+
+
+				<div class="container-fluid mt-4">
+
+
+
+					<div class="row card card-themed">
+						<div class="col-md-12 grid-margin">
+
+							<section layout:fragment="content"></section>
+
+
+						</div>
+					</div>
+				</div>
+
+
+
+			</div>
+		</div>
+	</main>
+	<div th:replace="fragments/footer :: footer"></div>
+</body>
+
+<script type="text/javascript"
+	th:src="@{/webjars/bootstrap/js/bootstrap.bundle.min.js}"></script>
+<script>
+
+(function() {
+	'use strict'
+
+	// Fetch all the forms we want to apply custom Bootstrap validation styles to
+	var forms = document.querySelectorAll('.needs-validation')
+
+	// Loop over them and prevent submission
+	Array.prototype.slice.call(forms).forEach(function(form) {
+		form.addEventListener('submit', function(event) {
+			if (!form.checkValidity()) {
+				event.preventDefault()
+				event.stopPropagation()
+			}
+
+			form.classList.add('was-validated')
+		}, false)
+	})
+})()
+</script>
+
+</html>

@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{layouts/layout_dbfiles}">
+<head>
+<title
+	th:text="${#httpServletRequest.getRequestURI().contains('/userEdit') ? 'User Add/Edit':''}"></title>
+
+</head>
+
+<div layout:fragment="content">
+
+
+	<nav
+		class="navbar navbar-expand py-0 navbar-dark bg-dark navbar-custom mb-3">
+		<div class="container-fluid">
+			<div class="col-md-4 expandSearchBar float-start">
+				<h4 class="m-0 text-danger">Repository Files</h4>
+
+			</div>
+			<!-- 			<div class="col-md-5"> -->
+			<form th:action="@{/listDocumentsByName}" autocomplete="off"
+				id="dbfilesearchform" name="dbfilesearchform"
+				class="search-form-global py-0">
+				<input id="filename" type="text" name="filename"
+					class="form-control" placeholder="Global Search..." required />
+				<button type="submit">
+					<i class="fas fa-search navbar-search-icon text-danger"></i>
+				</button>
+			</form>
+			<!-- 			</div> -->
+			<div class="col-md-4 align-middle expandSearchBar mt-3">
+				<ol class="breadcrumb float-end">
+					<li class="breadcrumb-item text-danger"><a href="/"
+						th:href="@{/}"> Home</a></li>
+					<li class="breadcrumb-item active">Repository Files</li>
+				</ol>
+			</div>
+		</div>
+	</nav>
+
+
+
+	<div class="row">
+		<div class="col-12 col-md-12 col-lg-12">
+			<div class="card themed-card card-fullheight">
+				<div class="card-header card-header-nobg">
+					<div class="d-flex align-items-center justify-content-between">
+						<h3 class="float-start">Repository Files</h3>
+					</div>
+
+				</div>
+
+
+
+
+				<div class="card-content">
+
+
+					<div th:if="${not #lists.isEmpty(filesbyname)}">
+
+						<input id="tableFilterInput" type="text"
+							class="dbfilesTable-filter" dbFiles-data-table="dbfilesTable"
+							placeholder="Type to search ..." /> <i
+							class="fas fa-search text-primary" id="tableFilterInputbtn"></i>
+
+						<div class="table-reponsive">
+							<table id="dbFilesTable" class="table table-hover dbfilesTable"
+								style="width: 100%">
+								<thead>
+									<tr>
+										<!-- <th>#</th> -->
+										<!--<th>Id</th> -->
+										<th>Name</th>
+										<th>Type</th>
+										<th>Size</th>
+										<th>CreatedBy</th>
+										<th>DateCreated</th>
+										<th>ModifiedBy</th>
+										<th>LastModified</th>
+										<th>Actions</th>
+									</tr>
+								</thead>
+								<tbody>
+									<tr th:each="dbfile,rowStat : ${filesbyname}">
+										<!-- 								<td th:text="${rowStat.count}">1</td> -->
+										<!--<td th:text="${dbfile.id}"></td> -->
+										<td th:text="${dbfile.filename}"></td>
+										<td th:text="${dbfile.mimetype}"></td>
+										<td th:text="${dbfile.filesize}"></td>
+										<td th:text="${dbfile.createdBy}"></td>
+										<td th:text="${dbfile.createdDate}"></td>
+										<td th:text="${dbfile.lastModifiedBy}"></td>
+										<td th:text="${dbfile.lastModifiedDate}"></td>
+										<td><div class="btn-group">
+												<a class="btn btn-sm btn-info"
+													th:href="@{/viewTheFile/{uuid}(uuid=${dbfile.documentuuid})}"
+													target="_blank"><i class="fas fa-eye"></i> </a><a
+													class="btn btn-sm btn-success mx-2"
+													th:href="${'/files/' + dbfile.documentuuid}"><i
+													class="fas fa-cloud-download-alt"> </i> </a> <a
+													th:href="@{'/deleteDocument/' + ${dbfile.documentuuid}}"
+													class="btn btn-sm btn-danger mr-2 delBtn"
+													id="open-modal-userdelete-btn"><i
+													class="fas fa-times-circle"></i></a>
+											</div></td>
+									</tr>
+								</tbody>
+								<tfoot>
+									<tr>
+										<!-- <th>#</th> -->
+										<!--<th>Id</th> -->
+										<th>Name</th>
+										<th>Type</th>
+										<th>Size</th>
+										<th>CreatedBy</th>
+										<th>DateCreated</th>
+										<th>ModifiedBy</th>
+										<th>LastModified</th>
+										<th>Action</th>
+									</tr>
+								</tfoot>
+							</table>
+						</div>
+
+
+
+
+
+
+
+					</div>
+
+					<div th:if="${#lists.isEmpty(filesbyname)}">
+						<h3 class=" text-primary text-center mt-5">No results found !</h3>
+
+						<h3 class=" text-success text-center mt-5">Change input and try again !</h3>
+					</div>
+
+
+
+
+				</div>
+
+
+			</div>
+		</div>
+	</div>
+
+
+
+
+</div>
+
+</body>
+
+</html>

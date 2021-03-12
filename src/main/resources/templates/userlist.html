@@ -1,0 +1,364 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{layouts/layout}">
+<head>
+<title>Springboot Rocks</title>
+</head>
+
+<body class="d-flex flex-column h-100">
+	<div layout:fragment="content">
+
+
+		<nav
+			class="navbar navbar-expand py-0 navbar-dark bg-dark navbar-custom">
+			<div class="container-fluid">
+				<div class="col-md-6 float-start">
+					<h4 class="m-0 text-danger">Users</h4>
+				</div>
+				<div class="col-md-6 align-middle mt-3">
+					<ol class="breadcrumb float-end">
+						<li class="breadcrumb-item text-danger"><a href="/"
+							th:href="@{/}"> Home</a></li>
+						<li class="breadcrumb-item active">Users</li>
+					</ol>
+				</div>
+			</div>
+		</nav>
+
+
+		<div class="row">
+			<div class="col-12 col-md-12 col-lg-12">
+				<div class="card themed-card">
+					<div class="card-header card-header-nobg">
+						<div class="d-flex align-items-center justify-content-between">
+							<h3 class="float-start">Manage Users</h3>
+
+							<a class="btn btn-sm btn-success" href="/userEdit"
+								th:href="@{/userEdit}"><i class="fas fa-plus"></i> Add user</a>
+
+							<div class="col-sm-1" th:if="${users.totalPages != 0}">
+								<select class="form-select form-select-sm" id="pageSizeSelect">
+									<option selected disabled value="itemsperpage">Size</option>
+									<option th:each="pageSize : ${pageSizes}"
+										th:value="${pageSize}" th:text="${pageSize}"
+										th:selected="${pageSize} == ${selectedPageSize}"></option>
+								</select>
+							</div>
+
+							<ul class="navbar-nav float-end dropdown-menu-end">
+								<li class="nav-item dropdown"><a class="nav-link" href="#"
+									id="dropdown01" data-bs-toggle="dropdown" aria-expanded="false"><i
+										class="fas fa-cloud-download-alt text-primary fa-2x"></i></a>
+									<ul class="dropdown-menu dropdown-menu-end"
+										aria-labelledby="dropdown01">
+										<li><a href="/alluserreportCSV"
+											th:href="@{/alluserreportCSV}" class="dropdown-item mt-2"><i
+												class="fas fa-file-csv mx-2 text-success"></i> Download as
+												CSV</a></li>
+										<li><a href="/alluserreportPDF"
+											th:href="@{/alluserreportPDF}" target="_blank"
+											class="dropdown-item mt-2"><i
+												class="fas fa-file-pdf mx-2 text-danger"></i> Download as
+												PDF</a></li>
+										<li><a href="/alluserreportExcel"
+											th:href="@{/alluserreportExcel}" class="dropdown-item mt-2"><i
+												class="fas fa-file-excel mx-2 text-success"></i> Download as
+												Excel</a></li>
+
+										<li><a href="/alluserreportJSON"
+											th:href="@{/alluserreportJSON}" target="_blank"
+											class="dropdown-item mt-2"><i
+												class="fas fa-file-excel mx-2 text-success"></i> Download as
+												JSON</a></li>
+										<li><a href="/jasper-HTMLEXPORT-report"
+											th:href="@{/jasper-HTMLEXPORT-report}" target="_blank"
+											class="dropdown-item mt-2"><i
+												class="fas fa-file-excel mx-2 text-success"></i> Download as
+												JasperReport</a></li>
+									</ul></li>
+							</ul>
+						</div>
+
+					</div>
+					<div class="card-content">
+						<div class="table-reponsive">
+							<table class="table" id="userTable">
+								<thead class="success">
+									<tr>
+										<th>UserID</th>
+										<th>Username</th>
+										<th>Email</th>
+										<th>Firstname</th>
+										<th>Lastname</th>
+										<th>Address</th>
+										<!-- 										<th>DateCreated</th> -->
+										<!-- 										<th>CreatedBy</th> -->
+										<!-- 										<th>LastModified</th> -->
+										<!-- 										<th>ModifiedBy</th> -->
+										<th class="text-center">Actions</th>
+
+									</tr>
+								</thead>
+								<tbody class="tbody">
+
+									<tr th:each="user, userStat : ${users}">
+										<td th:text="${user.id}"></td>
+										<td th:text="${user.username}"></td>
+										<td th:text="${user.useremail}"></td>
+										<td th:text="${user.userfirstname}"></td>
+										<td th:text="${user.userlastname}"></td>
+										<td th:text="${user.useraddress}"></td>
+										<!-- 										<td th:text="${user.userdatecreated}"></td>  deleteUser  -->
+										<!-- 										<td th:text="${user.usercreatedby}"></td> -->
+										<!-- 										<td th:text="${user.userdatemodified}"></td> -->
+										<!-- 										<td th:text="${user.usermodifiedby}"></td> -->
+
+										<td class="text-center"><div class="btn-group">
+
+												<a class="btn btn-sm btn-info mx-1"
+													data-bs-toggle="modal" data-bs-target="#exampleModal"
+													id="viewdetailsbtn" th:data-parameter1="${user.id}"
+													onclick="displayUsers(this.getAttribute('data-parameter1'));">
+													<i class="fas fa-info-circle text-white"></i>
+												</a>
+												<div sec:authorize="hasAuthority('ADMIN')">
+													<a th:href="@{'/userEdit/' + ${user.id}}"
+														class="btn btn-sm btn-warning mx-1" id="open-modal-btn"><i
+														class="fas fa-user-edit"></i></a>
+												</div>
+												<a th:onclick="deleteTheRecord(this, [[${user.id}]])"
+													class="btn btn-sm btn-danger mx-1"
+													id="open-modal-userdelete-btn"><i
+													class="fas fa-user-times"></i></a>
+											</div></td>
+									</tr>
+
+								</tbody>
+							</table>
+						</div>
+
+
+						<div class="row col-md-12">
+							<div class="col-md-6 mt-2 float-start">
+								<span class="badge btn-danger"> Total Records:</span> <span
+									class="badge btn-primary" th:text="${totalusers}"> </span>
+							</div>
+							<div class="col-md-6 float-end">
+								<div class="float-end mb-4">
+									<div th:if="${users.totalPages != 0}"
+										class="pagination-container float-end">
+										<ul class="pagination">
+											<li th:class="${users.number == 0} ? disabled"><a
+												class="btn btn-sm btn-darkfuchsia mx-2"
+												th:href="@{/userlist/(pageSize=${selectedPageSize}, page=1)}"><i class="fas fa-fast-backward"></i></a></li>
+											<li th:class="${users.number == 0} ? disabled"><a
+												class="btn btn-sm btn-midfuchsia mx-2"
+												th:href="@{/userlist/(pageSize=${selectedPageSize}, page=${users.number})}"><i
+													class="fas fa-arrow-left"></i></a></li>
+											<li
+												th:class="${users.number == (page - 1)} ? 'active pointer-disabled'"
+												th:each="page : ${#numbers.sequence(pager.startPage, pager.endPage)}">
+												<a class="btn btn-sm btn-info mx-2"
+												th:href="@{/userlist/(pageSize=${selectedPageSize}, page=${page})}"
+												th:text="${page}"></a>
+											</li>
+											<li
+												th:class="${users.number + 1 == users.totalPages} ? disabled">
+												<a class="btn btn-sm btn-midfuchsia mx-2"
+												th:href="@{/userlist/(pageSize=${selectedPageSize}, page=${users.number + 2})}"><i
+													class="fas fa-arrow-right"></i></a>
+											</li>
+											<li
+												th:class="${users.number + 1 == users.totalPages} ? disabled">
+												<a class="btn btn-sm btn-darkfuchsia mx-2"
+												th:href="@{/userlist/(pageSize=${selectedPageSize}, page=${users.totalPages})}"><i class="fas fa-fast-forward"></i></a>
+											</li>
+										</ul>
+									</div>
+								</div>
+							</div>
+						</div>
+
+					</div>
+				</div>
+			</div>
+
+		</div>
+
+		<div id="exampleModal" class="modal fade" data-bs-backdrop="static"
+			data-bs-keyboard="false" tabindex="-1"
+			aria-labelledby="staticBackdropLabel" aria-hidden="true">
+			<div class="modal-dialog modal-dialog-centered modal-lg"
+				role="document">
+				<div class="modal-content">
+					<div class="modal-header modal-header-primary">
+						<h5 class="modal-title">User Details</h5>
+						<button type="button" class="btn-close close"
+							data-bs-dismiss="modal" aria-label="Close"></button>
+					</div>
+					<div class="modal-body">
+						<div class="row">
+							<div class="col-md-4 text-end">
+								<label class="control-label badge bg-danger" for="userId">Id
+									:</label>
+							</div>
+							<div class="col-md-8 text-start">
+								<p class="badge bg-primary" id="userId"></p>
+							</div>
+						</div>
+						<div class="row">
+							<div class="col-md-4 text-end">
+								<label class="control-label badge bg-info" for="userName">Username
+									:</label>
+							</div>
+							<div class="col-md-8 text-start">
+								<p class="badge bg-primary" id="userName"></p>
+							</div>
+						</div>
+						<div class="row">
+							<div class="col-md-4 text-end">
+								<label class="control-label badge bg-success" for="userEmail">Email-Id
+									:</label>
+							</div>
+							<div class="col-md-8 text-start">
+								<p class="badge bg-primary" id="userEmail"></p>
+							</div>
+						</div>
+						<div class="row">
+							<div class="col-md-4 text-end">
+								<label class="control-label badge bg-info" for="userFirstname">Firstname
+									:</label>
+							</div>
+							<div class="col-md-8 text-start">
+								<p class="badge bg-primary" id="userFirstname"></p>
+							</div>
+						</div>
+						<div class="row">
+							<div class="col-md-4 text-end">
+								<label class="control-label badge bg-danger" for="userLastname">Lastname
+									:</label>
+							</div>
+							<div class="col-md-8 text-start">
+								<p class="badge bg-primary" id="userLastname"></p>
+							</div>
+						</div>
+						<div class="row">
+							<div class="col-md-4 text-end">
+								<label class="control-label badge bg-warning" for="userAddress">Address
+									:</label>
+							</div>
+							<div class="col-md-8 text-start">
+								<p class="badge bg-primary" id="userAddress"></p>
+							</div>
+						</div>
+						<div class="row">
+							<div class="col-md-4 text-end">
+								<label class="control-label badge bg-danger"
+									for="userDatecreated">Date Created :</label>
+							</div>
+							<div class="col-md-8 text-start">
+								<p class="badge bg-primary" id="userDatecreated"></p>
+							</div>
+						</div>
+						<div class="row">
+							<div class="col-md-4 text-end">
+								<label class="control-label badge bg-warning"
+									for="userCreatedby">Created By :</label>
+							</div>
+							<div class="col-md-8 text-start">
+								<p class="badge bg-primary" id="userCreatedby"></p>
+							</div>
+						</div>
+						<div class="row">
+							<div class="col-md-4 text-end">
+								<label class="control-label badge bg-danger"
+									for="userDatemodified">Date Modified :</label>
+							</div>
+							<div class="col-md-8 text-start">
+								<p class="badge bg-primary" id="userDatemodified"></p>
+							</div>
+						</div>
+						<div class="row">
+							<div class="col-md-4 text-end">
+								<label class="control-label badge bg-warning"
+									for="userModifiedby">Modified By :</label>
+							</div>
+							<div class="col-md-8 text-start">
+								<p class="badge bg-primary" id="userModifiedby"></p>
+							</div>
+						</div>
+
+						<div class="row">
+							<div class="col-md-4 text-end">
+								<label class="control-label badge bg-warning" for="userRoles">Roles
+									:</label>
+							</div>
+							<div class="col-md-8 text-start">
+								<p class="badge bg-primary" id="userRoles"></p>
+							</div>
+						</div>
+
+					</div>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-secondary"
+							data-bs-dismiss="modal">Close</button>
+					</div>
+				</div>
+			</div>
+		</div>
+
+
+		<div id="deleteConfirmationModal" class="modal fade"
+			data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+			aria-labelledby="deleteConfirmationModalLabel" aria-hidden="true">
+			<div class="modal-dialog modal-dialog-centered modal-lg"
+				role="document">
+				<div class="modal-content">
+					<div class="modal-header modal-header-danger">
+						<h5 class="modal-title">Delete Confirmation</h5>
+						<button type="button" class="btn-close close"
+							data-bs-dismiss="modal" aria-label="Close"></button>
+					</div>
+					<div class="modal-body">Delete Successful.. !!</div>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-secondary"
+							data-bs-dismiss="modal">Close</button>
+					</div>
+				</div>
+			</div>
+		</div>
+
+
+		<div id="accessDeniedModal" class="modal fade"
+			data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+			aria-labelledby="accessDeniedModalLabel" aria-hidden="true">
+			<div class="modal-dialog modal-dialog-centered modal-lg"
+				role="document">
+				<div class="modal-content">
+					<div class="modal-header modal-header-danger">
+						<h5 class="modal-title">403 Access Denied !!!</h5>
+						<button type="button" class="btn-close close"
+							data-bs-dismiss="modal" aria-label="Close"></button>
+					</div>
+					<div class="modal-body">You do not have permissions for this
+						operations !!</div>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-secondary"
+							data-bs-dismiss="modal">Close</button>
+					</div>
+				</div>
+			</div>
+		</div>
+
+
+
+
+	</div>
+
+
+
+
+</body>
+
+</html>

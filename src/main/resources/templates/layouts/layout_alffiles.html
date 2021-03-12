@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport"
+	content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<title th:text="${metaTitle} ? ${metaTitle} : 'default title'"></title>
+
+<link rel="stylesheet" th:href="@{/webjars/font-awesome/css/all.css}">
+<link rel="stylesheet"
+	th:href="@{/webjars/bootstrap/css/bootstrap.min.css}" />
+<link rel="stylesheet" th:href="@{/css/main.css}">
+</head>
+<body>
+	<main class="flex-shrink-0">
+		<div class="wrapper">
+			<div th:replace="fragments/sidebar :: sidebar"></div>
+			<div id="content">
+				<div th:replace="fragments/header :: header"></div>
+				<div th:replace="fragments/overlay :: overlay"></div>
+				<div class="container-fluid mt-2">
+					<div th:replace="fragments/panel :: panel"></div>
+<!-- 					<div th:replace="fragments/search :: searchpanel"></div> -->
+					<div class="row">
+						<div class="col-md-12 grid-margin">
+							<section layout:fragment="content"></section>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</main>
+	<div th:replace="fragments/footer :: footer"></div>
+</body>
+
+<script type="text/javascript"
+	th:src="@{/webjars/bootstrap/js/bootstrap.bundle.min.js}"></script>
+<script type="text/javascript" th:src="@{/js/main.js}"></script>
+<script type="text/javascript">
+document.addEventListener('input', function (event) {
+	if (event.target.id !== "pageSizeSelect") return;
+	//alert(event.target.value);
+	window.location.href = '/dbFilesList?pageSize='	+ event.target.value + '&page=1';
+}, false);
+</script>
+<script type="text/javascript">
+document.addEventListener('input', function (event) {
+	if (event.target.id !== "pageSizeSelectMyDocs") return;
+	//alert(event.target.value);
+	window.location.href = '/myDocuments?pageSize='	+ event.target.value + '&page=1';
+}, false);
+</script>
+<script type="text/javascript">
+(function() {
+	'use strict';
+
+var TableFilter = (function() {
+ var Arr = Array.prototype;
+		var input;
+  
+		function onInputEvent(e) {
+			input = e.target;
+			var table1 = document.getElementsByClassName(input.getAttribute('dbFiles-data-table'));
+			Arr.forEach.call(table1, function(table) {
+				Arr.forEach.call(table.tBodies, function(tbody) {
+					Arr.forEach.call(tbody.rows, filter);
+				});
+			});
+		}
+
+		function filter(row) {
+			var text = row.textContent.toLowerCase();
+       //console.log(text);
+      var val = input.value.toLowerCase();
+      //console.log(val);
+			row.style.display = text.indexOf(val) === -1 ? 'none' : 'table-row';
+		}
+
+		return {
+			init: function() {
+				var inputs = document.getElementsByClassName('dbfilesTable-filter');
+				Arr.forEach.call(inputs, function(input) {
+					input.oninput = onInputEvent;
+				});
+			}
+		};
+ 
+	})();
+
+  /*console.log(document.readyState);
+	document.addEventListener('readystatechange', function() {
+		if (document.readyState === 'complete') {
+      //console.log(document.readyState);
+			TableFilter.init();
+		}
+	}); */
+  
+ TableFilter.init(); 
+})();
+</script>
+
+
+
+</html>

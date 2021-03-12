@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{layouts/layout}">
+<head>
+<title>Springboot Rocks</title>
+</head>
+
+<body id="page-top">
+	<div layout:fragment="content">
+
+
+		<nav
+			class="navbar navbar-expand py-0 navbar-dark bg-dark navbar-custom">
+			<div class="container-fluid">
+				<div class="col-md-6 float-start">
+					<h4 class="m-0 text-danger">Not Found</h4>
+				</div>
+			</div>
+		</nav>
+
+
+		<div class="row mb-5">
+			<div class="col-12 col-md-12 col-lg-12">
+				<div class="card themed-card">
+					<div class="card-header card-header-nobg">
+						<div class="d-flex align-items-center text-danger justify-content-between">
+							<h3 class="float-start">Not Found</h3>
+						</div>
+					</div>
+
+
+					<div class="container-fluid" id="container-wrapper mb-5">
+						<div class="text-center mt-5 py-5 mb-5">
+							<br /> <br /> <i class="fas fa-exclamation-triangle fa-5x mb-3"
+								style="color: #dc3545"></i>
+							<h3 class="text-gray-800 font-weight-bold">Oopss!</h3>
+							<p class="lead text-gray-800 mx-auto">404 Not Found</p>
+								<h4 class="text-danger font-weight-bold">Looks like there is a serious disconnect !</h4>
+								<h4 class="text-danger font-weight-bold">The resource you are trying to access seems unavailable !!</h4>
+							<a th:href="@{/}" class="btn btn-primary"> <i
+								class="fas fa-chevron-circle-left"></i> Try going Home <i
+								class="fas fa-home"> </i>
+							</a>
+
+
+						</div>
+					</div>
+
+				</div>
+			</div>
+		</div>
+
+	</div>
+</body>
+</html>

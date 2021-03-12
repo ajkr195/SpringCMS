@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{layouts/layout}">
+<head>
+<title
+	th:text="${#httpServletRequest.getRequestURI().contains('/userEdit') ? 'User Add/Edit':''}"></title>
+
+</head>
+<body class="d-flex flex-column h-100">
+<div layout:fragment="content">
+
+
+	<nav
+		class="navbar navbar-expand py-0 navbar-dark bg-dark navbar-custom">
+		<div class="container-fluid">
+			<div class="col-md-6 float-start" th:if="${creatinguser}">
+				<h4 class="m-0 text-danger">Add User</h4>
+			</div>
+			<div class="col-md-6 float-start" th:if="${editinguser}">
+				<h4 class="m-0 text-danger">Edit User</h4>
+			</div>
+			<div class="col-md-6 align-middle mt-3">
+				<ol class="breadcrumb float-end">
+					<li class="breadcrumb-item text-danger"><a href="/"
+						th:href="@{/}"> Home</a></li>
+					<li class="breadcrumb-item text-danger"><a href="/userlist"
+						th:href="@{/userlist}"> Userlist</a></li>
+					<li class="breadcrumb-item active">Users</li>
+				</ol>
+			</div>
+		</div>
+	</nav>
+
+
+
+	<div class="row">
+		<div class="col-12 col-md-12 col-lg-12">
+			<div class="card themed-card">
+				<div class="card-header card-header-nobg">
+					<div class="d-flex align-items-center justify-content-between">
+						<h3 class="float-start" th:if="${creatinguser}">Add User</h3>
+						<h3 class="float-start" th:if="${editinguser}">Edit User</h3>
+					</div>
+				</div>
+
+
+				<div class="card-content">
+					<form class="form-group needs-validation mt-4"
+						th:action="@{/userEdit}" th:object="${appuser}" autocomplete="off"
+						method="post" novalidate>
+
+						<input th:type="hidden" id="id" name="id" th:field="${appuser.id}" />
+
+
+						<div th:if="${not #strings.isEmpty(creatinguser)}">
+							<div class="row mb-4">
+								<div class="col-md-3 text-end fw-bold">
+									<label for="username" class="form-label">User name</label>
+								</div>
+								<div class="col-md-8">
+									<input type="text" class="form-control" id="username"
+										th:field="${appuser.username}" required>
+									<div class="invalid-feedback">Please choose a username.</div>
+									<!--<div class="valid-feedback">Looks good!</div> -->
+									<p class="errorclass" th:if="${#fields.hasErrors('username')}"
+										th:errors="*{username}" />
+								</div>
+							</div>
+						</div>
+
+						<div th:if="${not #strings.isEmpty(editinguser)}">
+							<div class="row mb-4">
+								<div class="col-md-3 text-end fw-bold">
+									<label for="username" class="form-label">User name</label>
+								</div>
+								<div class="col-md-8">
+									<input type="text" class="form-control" id="username"
+										th:field="${appuser.username}" required readonly>
+									<div class="invalid-feedback">Please choose a username.</div>
+									<!--<div class="valid-feedback">Looks good!</div> -->
+									<p class="errorclass" th:if="${#fields.hasErrors('username')}"
+										th:errors="*{username}" />
+								</div>
+							</div>
+						</div>
+
+						<div class="row mb-4">
+							<div class="col-md-3 text-end fw-bold">
+								<label for="userpassword" class="form-label">Password</label>
+							</div>
+							<div class="col-md-8">
+								<input type="password" class="form-control" id="userpassword"
+									th:field="${appuser.userpassword}" required>
+								<div class="invalid-feedback">Please set valid password.</div>
+								<!--<div class="valid-feedback">Looks good!</div> -->
+								<p class="errorclass" th:if="${#fields.hasErrors('userpassword')}"
+									th:errors="*{userpassword}" />
+							</div>
+						</div>
+
+						<div class="row mb-4">
+							<div class="col-md-3 text-end fw-bold">
+								<label for="confirmpassword" class="form-label">Repeat
+									Password</label>
+							</div>
+							<div class="col-md-8">
+								<input type="password" class="form-control" id="confirmpassword"
+									th:field="${appuser.passwordConfirm}" required>
+								<div class="invalid-feedback">Please re-confirm password.</div>
+								<!--<div class="valid-feedback">Looks good!</div> -->
+								<p class="errorclass"
+									th:if="${#fields.hasErrors('passwordConfirm')}"
+									th:errors="*{passwordConfirm}" />
+							</div>
+						</div>
+
+						<div class="row mb-4">
+							<div class="col-md-3 text-end fw-bold">
+								<label for="useremail" class="form-label">Email</label>
+							</div>
+							<div class="col-md-8">
+								<div class="input-group">
+									<input type="email" class="form-control"
+										id="validationCustomUsername"
+										aria-describedby="inputGroupPrepend"
+										th:field="${appuser.useremail}" required>
+									<div class="invalid-feedback">Please provide valid
+										email-id.</div>
+									<div class="valid-feedback">Looks good!</div>
+								</div>
+								<p class="errorclass" th:if="${#fields.hasErrors('useremail')}"
+									th:errors="*{useremail}" />
+							</div>
+						</div>
+
+
+						<div class="row mb-4">
+							<div class="col-md-3 text-end fw-bold">
+								<label for="userfirstname" class="form-label">First name</label>
+							</div>
+							<div class="col-md-8">
+								<input type="text" class="form-control" id="userfirstname"
+									th:field="${appuser.userfirstname}" required>
+								<div class="invalid-feedback">Please provide First Name.</div>
+								<div class="valid-feedback">Looks good!</div>
+								<p class="errorclass"
+									th:if="${#fields.hasErrors('userfirstname')}"
+									th:errors="*{userfirstname}" />
+							</div>
+
+						</div>
+
+						<div class="row mb-4">
+							<div class="col-md-3 text-end fw-bold">
+								<label for="userlastname" class="form-label">Last name</label>
+							</div>
+							<div class="col-md-8">
+								<input type="text" class="form-control" id="userlastname"
+									th:field="${appuser.userlastname}" required>
+								<div class="invalid-feedback">Please provide Last Name.</div>
+								<div class="valid-feedback">Looks good!</div>
+								<p class="errorclass"
+									th:if="${#fields.hasErrors('userlastname')}"
+									th:errors="*{userlastname}" />
+							</div>
+
+						</div>
+
+						<div class="row mb-4">
+							<div class="col-md-3 text-end fw-bold">
+								<label for="useraddress" class="form-label">Location</label>
+							</div>
+							<div class="col-md-8">
+								<input type="text" class="form-control" id="useraddress"
+									th:field="${appuser.useraddress}" required>
+								<div class="invalid-feedback">Please provide your
+									Location.</div>
+								<div class="valid-feedback">Looks good!</div>
+								<p class="errorclass"
+									th:if="${#fields.hasErrors('useraddress')}"
+									th:errors="*{useraddress}" />
+							</div>
+
+						</div>
+
+
+
+
+						<div class="row mb-4">
+							<div class="col-md-3 text-end fw-bold">
+								<label for="userroles" class="form-label">Roles</label>
+							</div>
+							<div class="col-md-5">
+								<select class="form-select form-select-sm" id="userroles"
+									th:field="${appuser.roles}" required multiple>
+									<option value="" selected disabled>-- Select Roles --</option>
+									<option th:each="role : ${roles}" th:value="${role.id}"
+										th:text="${role.name}">Role</option>
+								</select>
+								<div class="invalid-feedback">Please select at least one
+									role.</div>
+								<p class="errorclass" th:if="${#fields.hasErrors('roles')}"
+									th:errors="*{roles}" />
+							</div>
+
+						</div>
+
+
+
+
+
+						<div class="row mb-4">
+							<div class="col-md-3 text-end fw-bold">
+								<label for="termscheckbox" class="form-label"></label>
+							</div>
+							<div class="col-md-4">
+								<div class="form-check">
+									<input class="form-check-input" type="checkbox" value=""
+										id="invalidCheck" required> <label
+										class="form-check-label" for="invalidCheck"> I agree
+										to <a type="button" href="#"
+											data-bs-toggle="modal" data-bs-target="#staticBackdrop"
+											class="text-primary"> terms and conditions </a> </label>
+									<div class="invalid-feedback">
+										You must agree to terms and conditions before
+										submitting.
+									</div>
+								</div>
+							</div>
+						</div>
+
+						<div class="row mb-4">
+							<button class="btn btn-danger fw-bold" id="formsubmitbutton"
+								type="submit">
+								<i class="fas fa-check-double fa-2x"></i> Submit
+							</button>
+						</div>
+
+
+					</form>
+
+				</div>
+
+
+			</div>
+		</div>
+	</div>
+
+
+
+	<div class="modal fade" id="staticBackdrop" data-bs-backdrop="static"
+		data-bs-keyboard="false" tabindex="-1"
+		aria-labelledby="staticBackdropLabel" aria-hidden="true">
+		<div
+			class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h5 class="modal-title" id="staticBackdropLabel">Terms and
+						Conditions</h5>
+					<button type="button" class="btn-close" data-bs-dismiss="modal"
+						aria-label="Close"></button>
+				</div>
+				<div class="modal-body">
+					<p th:utext="${usernewregistrationnotice}">Text</p>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-secondary"
+						data-bs-dismiss="modal">Close</button>
+					<button type="button" class="btn btn-primary">Understood</button>
+				</div>
+			</div>
+		</div>
+	</div>
+
+
+
+
+</div>
+
+</body>
+
+</html>

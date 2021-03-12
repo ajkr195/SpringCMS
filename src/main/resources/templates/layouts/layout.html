@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport"
+	content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<title th:text="${metaTitle} ? ${metaTitle} : 'default title'"></title>
+
+<link rel="stylesheet" th:href="@{/webjars/font-awesome/css/all.css}">
+<link rel="stylesheet"
+	th:href="@{/webjars/bootstrap/css/bootstrap.min.css}" />
+<link rel="stylesheet" th:href="@{/css/main.css}">
+</head>
+<body>
+	<main class="flex-shrink-0">
+		<div class="wrapper">
+
+			<div th:replace="fragments/sidebar :: sidebar"></div>
+
+			<div id="content">
+
+				<div th:replace="fragments/header :: header"></div>
+
+				<div th:replace="fragments/overlay :: overlay"></div>
+
+				<div class="container-fluid mt-2">
+
+
+					<div th:replace="fragments/panel :: panel"></div>
+
+					<div class="row">
+						<div class="col-md-12 grid-margin">
+
+							<section layout:fragment="content"></section>
+
+
+						</div>
+					</div>
+				</div>
+
+
+
+			</div>
+		</div>
+	</main>
+	<div th:replace="fragments/footer :: footer"></div>
+</body>
+
+<script type="text/javascript"
+	th:src="@{/webjars/bootstrap/js/bootstrap.bundle.min.js}"></script>
+<script type="text/javascript" th:src="@{/js/main.js}"></script>
+<script type="text/javascript" th:src="@{/js/dbfiles.js}"></script>
+
+<script type="text/javascript">
+document.addEventListener('input', function (event) {
+	if (event.target.id !== "pageSizeSelect") return;
+	//alert(event.target.value);
+	window.location.href = '/userlist?pageSize='	+ event.target.value + '&page=1';
+}, false);
+</script>
+
+
+
+</html>

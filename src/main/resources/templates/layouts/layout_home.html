@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport"
+	content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<title th:text="${metaTitle} ? ${metaTitle} : 'default title'"></title>
+
+<link rel="stylesheet" th:href="@{/webjars/font-awesome/css/all.css}">
+<link rel="stylesheet"
+	th:href="@{/webjars/bootstrap/css/bootstrap.min.css}" />
+<link rel="stylesheet" th:href="@{/css/main.css}">
+<link rel="stylesheet" th:href="@{/css/aos.css}">
+</head>
+<body>
+	<main class="flex-shrink-0">
+		<div class="wrapper">
+
+
+			<div id="content">
+
+				<div th:replace="fragments/header_home :: header_home"></div>
+
+				<div th:replace="fragments/overlay :: overlay"></div>
+
+				<div class="container-fluid mt-2">
+
+
+					<div th:replace="fragments/panel :: panel"></div>
+
+					<div class="row">
+						<div class="col-md-12 grid-margin">
+
+							<section layout:fragment="content"></section>
+
+
+						</div>
+					</div>
+				</div>
+
+
+
+			</div>
+		</div>
+	</main>
+	<div th:replace="fragments/footer :: footer"></div>
+</body>
+
+<script type="text/javascript"
+	th:src="@{/webjars/bootstrap/js/bootstrap.bundle.min.js}"></script>
+<script type="text/javascript" th:src="@{/js/aos.js}"></script>
+<script>
+    AOS.init({
+  offset: 200,
+  duration: 400,
+  easing: 'ease-in-quad',
+  delay: 100,
+});
+</script>
+</html>

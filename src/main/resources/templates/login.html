@@ -1,0 +1,261 @@
+<!doctype html>
+<html lang="en" dir="ltr">
+<head>
+<title></title>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="shortcut icon" type="image/x-icon" href="img/leaf.svg">
+<link rel="stylesheet" th:href="@{/webjars/font-awesome/css/all.css}">
+<link rel="stylesheet"
+	th:href="@{/webjars/bootstrap/css/bootstrap.min.css}" />
+<style>
+@import
+	url('https://fonts.googleapis.com/css?family=Poppins:400,500,600,700&display=swap')
+	;
+
+* {
+	margin: 0;
+	padding: 0;
+	box-sizing: border-box;
+	font-family: 'Poppins', sans-serif;
+}
+
+html, body {
+	display: grid;
+	height: 100%;
+	width: 100%;
+	place-items: center;
+	background: linear-gradient(315deg, #2a2a72 0%, #009ffd 74%);
+}
+
+::selection {
+	background: #fa4299;
+	color: #fff;
+}
+
+.wrapper {
+	overflow: hidden;
+	max-width: 700px;
+	background: #fff;
+	padding: 30px;
+	border-radius: 5px;
+	box-shadow: 0px 15px 20px rgba(0, 0, 0, 0.1);
+}
+
+.wrapper .title-text {
+	display: flex;
+	width: 100%;
+}
+
+.wrapper .title {
+	width: 100%;
+	font-size: 35px;
+	text-align: center;
+	color: #86be2e;
+	font-weight: 900;
+	transition: all 0.6s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+}
+
+input[type="radio"] {
+	display: none;
+}
+
+#signup:checked ~ label.signup {
+	color: #fff;
+	cursor: default;
+	user-select: none;
+}
+
+#signup:checked ~ label.login {
+	color: #000;
+}
+
+#login:checked ~ label.signup {
+	color: #000;
+}
+
+#login:checked ~ label.login {
+	cursor: default;
+	user-select: none;
+}
+
+.wrapper .form-container {
+	width: 100%;
+	overflow: hidden;
+}
+
+.form-container .form-inner {
+	width: 500px;
+}
+
+.form-container .form-inner form {
+	width: 100%;
+	transition: all 0.6s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+}
+
+.form-inner form .field {
+	height: 50px;
+	width: 500px;
+	margin-top: 20px;
+}
+
+.form-inner form .field input {
+	height: 100%;
+	width: 100%;
+	outline: none;
+	padding-left: 15px;
+	border-radius: 5px;
+	border: 1px solid lightgrey;
+	border-bottom-width: 2px;
+	font-size: 17px;
+	transition: all 0.3s ease;
+}
+
+.form-inner form .field input:focus {
+	border-color: #fc83bb;
+	/* box-shadow: inset 0 0 3px #fb6aae; */
+}
+
+.form-inner form .field input::placeholder {
+	color: #999;
+	transition: all 0.3s ease;
+}
+
+form .field input:focus::placeholder {
+	color: #b3b3b3;
+}
+
+.form-inner form .pass-link {
+	margin-top: 5px;
+}
+
+.form-inner form .signup-link {
+	text-align: center;
+	margin-top: 30px;
+}
+
+.form-inner form .pass-link a, .form-inner form .signup-link a {
+	color: #009ffd;
+	text-decoration: none;
+}
+
+.form-inner form .pass-link a:hover, .form-inner form .signup-link a:hover
+	{
+	text-decoration: underline;
+}
+
+form .btn {
+	height: 50px;
+	width: 100%;
+	border-radius: 5px;
+	position: relative;
+	overflow: hidden;
+}
+
+form .btn input[type="submit"] {
+	height: 100%;
+	width: 100%;
+	z-index: 1;
+	position: relative;
+	background: none;
+	border: none;
+	color: #fff;
+	padding-left: 0;
+	border-radius: 5px;
+	font-size: 20px;
+	font-weight: 500;
+	cursor: pointer;
+}
+</style>
+</head>
+<body>
+	<div class="wrapper">
+
+		<div class="text-center">
+			<!-- 			<img src="img/leaf.svg" width="80" height="80" alt="The Planet Earth"> -->
+			<i class="fas fa-layer-group text-info fa-6x"></i>
+		</div>
+
+		<div class="title-text">
+			<div class="title signup" th:text="#{application.name}">Signup</div>
+		</div>
+
+		<div class="userMessages">
+			<div th:if="${param.error}"
+				class="alert alert-warning alert-dismissible fade show text-danger text-center"
+				role="alert">
+				<strong><span
+					th:utext="#{user.login.failure}">Invalid Email and Password.</span>
+				</strong>
+				<button type="button" class="btn-close" data-bs-dismiss="alert"
+					aria-label="Close"></button>
+
+			</div>
+
+			<div th:if="${param.logout}"
+				class="alert alert-info alert-dismissible fade show" role="alert">
+				<strong><i class="fas fa-info-circle fa-2x mx-4"></i> <span
+					th:text="#{user.logout.success}">You have been logged out.</span> </strong>
+				<button type="button" class="btn-close" data-bs-dismiss="alert"
+					aria-label="Close"></button>
+			</div>
+			<div th:if="${custommsg!=null}"
+				class="alert alert-warning alert-dismissable fade show">
+				<i class="fa fa-warning"></i> <span th:text="${custommsg}"></span>
+			</div>
+
+
+		</div>
+
+		<div class="form-container">
+			<div class="form-inner">
+				<form th:action="@{/login}" th:method="post" class="login">
+					<div class="field">
+						<input type="text" name="username" placeholder="Email Address"
+							required>
+					</div>
+					<div class="field">
+						<input type="password" name="password" placeholder="Password"
+							required>
+					</div>
+					<input type="hidden" name="${_csrf.parameterName}"
+						value="${_csrf.token}" />
+					<div class="pass-link mb-4 mt-4">
+						<a href="#">Forgot password?</a>
+					</div>
+
+					<input type="checkbox"
+						class="form-check-input custom-control-input mr-1"
+						id="customCheck" name="remember-me"> <label
+						class="custom-control-label mb-3" for="customCheck">
+						Remember Me</label>
+
+
+					<button type="submit" class="btn btn-primary">
+						<i class="fas fa-sign-in-alt"></i> Signin
+					</button>
+
+					<br /> <br /> <a type="submit" href="/home" th:href="@{/home}"
+						class="float-start"> <i class="fas fa-home"></i> Home
+					</a>
+
+					<!-- 						<input type="submit" value="Signin"> -->
+					<br /> <br />
+					<div class="signup-link">
+						Not a member? <a href="/userRegister" th:href="@{/userRegister}">Signup
+							now</a>
+					</div>
+				</form>
+
+
+			</div>
+		</div>
+	</div>
+
+
+
+</body>
+
+<script type="text/javascript"
+	th:src="@{/webjars/bootstrap/js/bootstrap.bundle.min.js}"></script>
+</html>

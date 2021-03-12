@@ -1,0 +1,130 @@
+<div id="sidebar" th:fragment="sidebar">
+	<div class="mainsidebar" id="mainsidebar">
+		<!-- <p class="text-center">Header Area</p> -->
+		<aside class="mainsidebar" id="mainsidebar">
+
+			<!-- 			<a href="#"><img src="img/leaf.svg" width="80" height="80" -->
+			<!-- 				alt="The Planet Earth"> </a> -->
+
+			<a href="/" th:href="@{/}"><i class="fas fa-layer-group text-info fa-6x"></i> </a>
+
+			<h4 class="text-center" th:text="#{application.name}">AVNI</h4>
+			<h5 sec:authorize="isAuthenticated()"
+				class="text-center text-success"
+				th:text="${#authentication.getPrincipal().getUsername()}">AVNI</h5>
+
+			<!-- 				<h3 class="text-center text-danger" -->
+			<!-- 				th:text="${#authentication.getPrincipal().authorities}">AVNI</h3> -->
+
+			<div class="mainsidebar-links">
+
+				<div class="link-red ddmenu" th:with="urls=${new String[]{'/'}}"
+					th:classappend="${#arrays.contains(urls, #httpServletRequest.getRequestURI()) ? 'selected' : ''}">
+					<a href="/" th:href="@{/}"> <i class="fa fas fa-home"></i>Home
+					</a>
+				</div>
+
+
+				<div class="link-green ddmenu"
+					th:with="urls=${new String[]{'/dashboard'}}"
+					th:classappend="${#arrays.contains(urls, #httpServletRequest.getRequestURI()) ? 'selected' : ''}"
+					sec:authorize="isAuthenticated()">
+					<a href="/dashboard" th:href="@{/dashboard}"> <i
+						class="fa fas fa-tachometer-alt"></i> Dashboard
+					</a>
+				</div>
+
+
+				<div class="link-blue ddmenu"
+					th:with="urls=${new String[]{'/dbFilesList','/alfresco'}}"
+					th:classappend="${#arrays.contains(urls, #httpServletRequest.getRequestURI()) ? 'selected' : ''}">
+					<a href="#"> <i class="fa far fa-database"></i>Repositories <i
+						class="fa fa-chevron-right rotate float-end"
+						th:with="urls=${new String[]{'/dbFilesList','/alfresco'}}"
+						th:classappend="${#arrays.contains(urls, #httpServletRequest.getRequestURI()) ? 'down' : ''}">
+					</i></a>
+					<ul class="sub-links">
+						<li sec:authorize="isAuthenticated()"><a href="/dbFilesList"
+							th:href="@{/dbFilesList}">Database</a></li>
+						<li sec:authorize="isAuthenticated()"><a href="/dbFilesList"
+							th:href="@{/dbFilesList}">FileNet</a></li>
+						<li><a href="/dbFilesList" th:href="@{/dbFilesList}">Alfresco</a></li>
+						<li sec:authorize="isAuthenticated()"><a href="/dbFilesList"
+							th:href="@{/dbFilesList}">MongoDB</a></li>
+						<li sec:authorize="isAuthenticated()"><a href="/dbFilesList"
+							th:href="@{/dbFilesList}">Amazon S3</a></li>
+					</ul>
+				</div>
+
+				<div class="link-red ddmenu" sec:authorize="isAuthenticated()">
+					<a href="#"><i class="fa fas fa-server"></i>Servers<i
+						class="fa fa-chevron-right rotate float-end"> </i> </a>
+					<ul class="sub-links">
+						<li><a href="#">Server 1</a></li>
+						<li><a href="#">Server 2</a></li>
+						<li><a href="#">Server 3</a></li>
+					</ul>
+				</div>
+
+				<div class="link-yellow ddmenu" sec:authorize="isAuthenticated()">
+					<a href="#"> <i class="fa fas fa-anchor"></i>Anchors <i
+						class="fa fa-chevron-right rotate float-end"> </i></a>
+					<ul class="sub-links">
+						<li><a href="#">Anchor 1</a></li>
+						<li><a href="#">Anchor 2</a></li>
+						<li><a href="#">Anchor 3</a></li>
+					</ul>
+				</div>
+
+				<div class="link-green ddmenu" sec:authorize="isAuthenticated()">
+
+					<a href="#"> <i class="fa fas fa-list"></i>Lists <i
+						class="fa fa-chevron-right rotate float-end"> </i></a>
+
+					<ul class="sub-links">
+						<li><a href="#">List 1</a></li>
+						<li><a href="#">List 2</a></li>
+						<li><a href="#">List 3</a></li>
+					</ul>
+
+				</div>
+
+
+				<div class="link-yellow ddmenu"
+					th:with="urls=${new String[]{'/userlist','/userEdit'}}"
+					th:classappend="${#arrays.contains(urls, #httpServletRequest.getRequestURI()) ? 'selected' : ''}"
+					sec:authorize="isAuthenticated()">
+					<a href="#"> <i class="fa fa-users"></i>Users <i
+						class="fa fa-chevron-right rotate float-end"
+						th:with="urls=${new String[]{'/userlist','/userEdit'}}"
+						th:classappend="${#arrays.contains(urls, #httpServletRequest.getRequestURI()) ? 'down' : ''}">
+					</i></a>
+					<ul class="sub-links">
+						<li><a href="#">Active users</a></li>
+						<li><a href="#">InActive users</a></li>
+						<li><a href="/userEdit" th:href="@{/userEdit}">Add user</a></li>
+						<li><a href="/userlist" th:href="@{/userlist}">Manager
+								users</a></li>
+					</ul>
+				</div>
+
+				<div class="link-red ddmenu" sec:authorize="isAuthenticated()">
+					<a href="#"><i class="fa fas fa-cog"></i>Settings<i
+						class="fa fa-chevron-right rotate float-end"> </i> </a>
+					<ul class="sub-links">
+						<li><a href="#">Setting 1</a></li>
+						<li><a href="#">Setting 2</a></li>
+						<li><a href="#">Setting 3</a></li>
+					</ul>
+				</div>
+
+
+				<div class="link-red ddmenu" sec:authorize="isAuthenticated()">
+					<a href="#"> <i class="fa fas fa-th-large"></i>Configurations
+					</a>
+				</div>
+
+			</div>
+		</aside>
+	</div>
+</div>

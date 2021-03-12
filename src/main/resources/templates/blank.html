@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{layouts/layout}">
+<head>
+<title
+	th:text="${#httpServletRequest.getRequestURI().contains('/userEdit') ? 'User Add/Edit':''}"></title>
+
+</head>
+
+<div layout:fragment="content">
+
+
+	<nav
+		class="navbar navbar-expand py-0 navbar-dark bg-dark navbar-custom">
+		<div class="container-fluid">
+			<div class="col-md-6 float-start">
+				<h4 class="m-0 text-danger">Blank</h4>
+			</div>
+			<div class="col-md-6 align-middle mt-3">
+				<ol class="breadcrumb float-end">
+					<li class="breadcrumb-item text-danger"><a href="/"
+						th:href="@{/}"> Home</a></li>
+					<li class="breadcrumb-item active">Blank</li>
+				</ol>
+			</div>
+		</div>
+	</nav>
+
+
+
+	<div class="row">
+		<div class="col-12 col-md-12 col-lg-12">
+			<div class="card themed-card">
+				<div class="card-header card-header-nobg">
+					<div class="d-flex align-items-center justify-content-between">
+						<h3 class="float-start">Blank</h3>
+					</div>
+				</div>
+
+
+				<div class="card-content">
+				
+				
+				
+				
+
+				</div>
+
+
+			</div>
+		</div>
+	</div>
+
+
+
+
+
+
+
+</div>
+
+</body>
+
+</html>

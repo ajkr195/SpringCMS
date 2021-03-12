@@ -1,0 +1,105 @@
+<!doctype html>
+<html lang="en" dir="ltr">
+<head>
+<title></title>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="shortcut icon" type="image/x-icon" href="img/leaf.svg">
+<link rel="stylesheet" th:href="@{/webjars/font-awesome/css/all.css}">
+<link rel="stylesheet"
+	th:href="@{/webjars/bootstrap/css/bootstrap.min.css}" />
+<style>
+@import
+	url('https://fonts.googleapis.com/css?family=Poppins:400,500,600,700&display=swap')
+	;
+
+* {
+	margin: 0;
+	padding: 0;
+	box-sizing: border-box;
+	font-family: 'Poppins', sans-serif;
+}
+
+html, body {
+	display: grid;
+	height: 100%;
+	width: 100%;
+	place-items: center;
+	background: linear-gradient(315deg, #2a2a72 0%, #009ffd 74%);
+}
+
+::selection {
+	background: #fa4299;
+	color: #fff;
+}
+
+.wrapper {
+	overflow: hidden;
+	max-width: 700px;
+	background: #fff;
+	padding: 30px;
+	border-radius: 5px;
+	box-shadow: 0px 15px 20px rgba(0, 0, 0, 0.1);
+}
+
+.wrapper .title-text {
+	display: flex;
+	width: 100%;
+}
+
+.wrapper .title {
+	width: 100%;
+	font-size: 35px;
+	text-align: center;
+	color: #86be2e;
+	font-weight: 900;
+	transition: all 0.6s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+}
+
+.wrapper .form-container {
+	width: 100%;
+	overflow: hidden;
+}
+
+.form-container .form-inner {
+	width: 500px;
+}
+</style>
+</head>
+<body>
+	<div class="wrapper">
+
+		<div class="text-center">
+			<!-- 			<img src="img/leaf.svg" width="80" height="80" alt="The Planet Earth"> -->
+			<i class="fas fa-layer-group text-info fa-6x"></i>
+		</div>
+
+		<div class="title-text">
+			<div class="title signup" th:text="#{application.name}">Signup</div>
+		</div>
+
+
+		<div class="form-container">
+			<div class="form-inner mt-3 mb-3 text-center">
+				<div th:if="${success}" class="text-success">
+					<h3 th:text="${messageFromController}">message</h3>
+				</div>
+				<div th:if="${not success}" class="text-danger">
+					<h4 th:text="${messageFromController}">message</h4>
+				</div>
+			</div>
+			<div class="row">
+				<a class="btn btn-primary" href="/login" th:href="@{/login}"> <i
+					class="fas fa-sign-in-alt"></i> Login Now
+				</a>
+			</div>
+		</div>
+	</div>
+
+
+
+</body>
+
+<script type="text/javascript"
+	th:src="@{/webjars/bootstrap/js/bootstrap.bundle.min.js}"></script>
+</html>

@@ -1,0 +1,325 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{layouts/layout}">
+<head>
+<title>Springboot Rocks</title>
+</head>
+
+<body class="d-flex flex-column h-100">
+	<div layout:fragment="content">
+
+
+		<nav
+			class="navbar navbar-expand py-0 navbar-dark bg-dark navbar-custom">
+			<div class="container-fluid">
+				<div class="col-md-6 float-start">
+					<h4 class="m-0 text-danger">Update Profile</h4>
+				</div>
+				<div class="col-md-6 align-middle mt-3">
+					<ol class="breadcrumb float-end">
+						<li class="breadcrumb-item text-danger"><a href="/"
+							th:href="@{/}"> Home</a></li>
+						<li class="breadcrumb-item active">Update Profile</li>
+					</ol>
+				</div>
+			</div>
+		</nav>
+
+
+		<div class="row">
+			<div class="col-12 col-md-12 col-lg-12">
+				<div class="card themed-card">
+					<div class="card-header card-header-nobg">
+						<div class="d-flex align-items-center justify-content-between">
+							<h3 class="float-start">Update Profile</h3>
+
+							<!-- 							<a class="btn btn-sm btn-success" href="/userEdit" -->
+							<!-- 								th:href="@{/userEdit}"><i class="fas fa-plus"></i> Add user</a> -->
+
+
+						</div>
+
+					</div>
+					<div class="card-content mb-3 mt-3">
+						<!-- 									<p class="login-box-msg">Create Profile</p> -->
+
+
+
+						<form class="form-group needs-validation"
+							th:action="@{/appUserProfile}" th:object="${appUserProfile}"
+							method="post" novalidate>
+
+							<input th:type="hidden" id="id" name="id"
+								th:field="${appUserProfile.id}" />
+							<div class="row">
+								<div class="col-md-6 bg-transparent">
+
+
+									<div class="row mb-3">
+										<div class="col-md-3 text-end fw-bold">
+											<label class="form-label" for="designation">Designation</label>
+										</div>
+										<div class="col-md-8">
+											<input class="form-control form-control-sm" type="text"
+												th:field="${appUserProfile.designation}" required />
+											<div class="invalid-feedback">Please provide your
+												designation.</div>
+											<p class="errorclass"
+												th:if="${#fields.hasErrors('designation')}"
+												th:errors="*{designation}" />
+										</div>
+									</div>
+
+
+									<div class="row mb-3">
+										<div class="col-md-3 text-end fw-bold">
+											<label class="form-label" for="followers">Followers</label>
+										</div>
+										<div class="col-md-8">
+											<input class="form-control form-control-sm" type="text"
+												th:field="${appUserProfile.followers}" required />
+											<div class="invalid-feedback">Please provide # of
+												followers.</div>
+											<p class="errorclass"
+												th:if="${#fields.hasErrors('followers')}"
+												th:errors="*{followers}" />
+										</div>
+									</div>
+
+									<div class="row mb-3">
+										<div class="col-md-3 text-end fw-bold">
+											<label class="form-label" for="friends">Friends</label>
+										</div>
+										<div class="col-md-8">
+											<input class="form-control form-control-sm" type="text"
+												th:field="${appUserProfile.friends}" required />
+											<div class="invalid-feedback">Please provide # of
+												friends.</div>
+											<p class="errorclass" th:if="${#fields.hasErrors('friends')}"
+												th:errors="*{friends}" />
+										</div>
+									</div>
+
+
+									<div class="row mb-3">
+										<div class="col-md-3 text-end fw-bold">
+											<label class="form-label" for="fans">Fans</label>
+										</div>
+										<div class="col-md-8">
+											<input class="form-control form-control-sm" type="text"
+												th:field="${appUserProfile.fans}" required />
+											<div class="invalid-feedback">Please provide # of fans.</div>
+											<p class="errorclass" th:if="${#fields.hasErrors('fans')}"
+												th:errors="*{fans}" />
+										</div>
+									</div>
+
+									<div class="row mb-3">
+										<div class="col-md-3 text-end fw-bold">
+											<label class="form-label" for="fans">Nickname</label>
+										</div>
+										<div class="col-md-8">
+											<input class="form-control form-control-sm" type="text"
+												th:field="${appUserProfile.nickname}" required />
+											<div class="invalid-feedback">Please provide nickname.</div>
+											<p class="errorclass"
+												th:if="${#fields.hasErrors('nickname')}"
+												th:errors="*{nickname}" />
+										</div>
+									</div>
+
+
+									<div class="row mb-3">
+										<div class="col-md-3 text-end fw-bold">
+											<label class="form-label" for="education">Education</label>
+										</div>
+										<div class="col-md-8">
+											<input class="form-control form-control-sm" type="text"
+												th:field="${appUserProfile.education}" required />
+											<div class="invalid-feedback">Please provide education.</div>
+											<p class="errorclass"
+												th:if="${#fields.hasErrors('education')}"
+												th:errors="*{education}" />
+										</div>
+									</div>
+
+									<div class="row mb-3">
+										<div class="col-md-3 text-end fw-bold">
+											<label class="form-label" for="location">Location</label>
+										</div>
+										<div class="col-md-8">
+											<input class="form-control form-control-sm" type="text"
+												th:field="${appUserProfile.location}" required />
+											<div class="invalid-feedback">Please provide location.</div>
+											<p class="errorclass"
+												th:if="${#fields.hasErrors('location')}"
+												th:errors="*{location}" />
+										</div>
+									</div>
+
+
+									<div class="row mb-3">
+										<div class="col-md-3 text-end fw-bold">
+											<label class="form-label" for="skills">Skills</label>
+										</div>
+										<div class="col-md-8">
+											<input class="form-control form-control-sm" type="text"
+												th:field="${appUserProfile.skills}" required />
+											<div class="invalid-feedback">Please provide your
+												primary skill.</div>
+											<p class="errorclass" th:if="${#fields.hasErrors('skills')}"
+												th:errors="*{skills}" />
+										</div>
+									</div>
+
+
+									<!-- 								<div class="row mb-2"> -->
+									<!-- 									<div class="col-md-3 text-end fw-bold"> -->
+									<!-- 										<label for="userroles" class="form-label">Skills</label> -->
+									<!-- 									</div> -->
+									<!-- 									<div class="col-md-4"> -->
+									<!-- 										<select class="form-select form-select-sm" id="dropdownSkills" -->
+									<!-- 											th:field="*{skills}" required> -->
+									<!-- 											<option value="" disabled selected>-- Select Primary -->
+									<!-- 												Skill --</option> -->
+									<!-- 											<option -->
+									<!-- 												th:each="skill : ${T(com.spring.boot.rocks.model.AppUserProfileSkills).values()}" -->
+									<!-- 												th:value="${skill.name()}" th:text="${skill.name()}"></option> -->
+									<!-- 										</select> -->
+									<!-- 										<div class="invalid-feedback">Please select a skill.</div> -->
+									<!-- 										<p class="errorclass" th:if="${#fields.hasErrors('skills')}" -->
+									<!-- 											th:errors="*{skills}" /> -->
+									<!-- 									</div> -->
+									<!-- 								</div> -->
+
+									<div class="row mb-4">
+										<div class="col-md-3 text-end fw-bold">
+											<label class="form-label" for="location">Notes</label>
+										</div>
+										<div class="col-md-8">
+											<input class="form-control form-control-sm" type="text"
+												th:field="${appUserProfile.notes}" required />
+											<div class="invalid-feedback">Please provide Notes.</div>
+											<p class="errorclass" th:if="${#fields.hasErrors('notes')}"
+												th:errors="*{notes}" />
+										</div>
+									</div>
+
+								</div>
+
+
+								<div class="col-md-6 bg-transparent">
+
+
+									<div class="row mb-4">
+										<div class="col-md-3 text-end fw-bold">
+											<label class="form-label" for="whitepapers">Whitepapers</label>
+										</div>
+										<div class="col-md-8">
+											<textarea rows="4" cols="4"
+												class="form-control form-control-sm"
+												th:field="${appUserProfile.whitepapers}" required></textarea>
+											<div class="invalid-feedback">Please provide
+												Whitepapers.</div>
+											<p class="errorclass"
+												th:if="${#fields.hasErrors('whitepapers')}"
+												th:errors="*{whitepapers}" />
+										</div>
+									</div>
+
+
+									<div class="row mb-4">
+										<div class="col-md-3 text-end fw-bold">
+											<label class="form-label" for="testimonials">Testimonials</label>
+										</div>
+										<div class="col-md-8">
+											<textarea rows="4" cols="4"
+												class="form-control form-control-sm"
+												th:field="${appUserProfile.testimonials}" required></textarea>
+											<div class="invalid-feedback">Please provide
+												Testimonials.</div>
+											<p class="errorclass"
+												th:if="${#fields.hasErrors('testimonials')}"
+												th:errors="*{testimonials}" />
+										</div>
+									</div>
+
+									<div class="row mb-4">
+										<div class="col-md-3 text-end fw-bold">
+											<label class="form-label" for="inventions">Inventions</label>
+										</div>
+										<div class="col-md-8">
+											<textarea rows="4" cols="4"
+												class="form-control form-control-sm"
+												th:field="${appUserProfile.inventions}" required></textarea>
+											<div class="invalid-feedback">Please provide
+												Inventions.</div>
+											<p class="errorclass"
+												th:if="${#fields.hasErrors('inventions')}"
+												th:errors="*{inventions}" />
+										</div>
+									</div>
+
+									<div class="row mb-4">
+										<div class="col-md-3 text-end fw-bold">
+											<label class="form-label" for="awards">Awards</label>
+										</div>
+										<div class="col-md-8">
+											<textarea rows="4" cols="4"
+												class="form-control form-control-sm"
+												th:field="${appUserProfile.awards}" required></textarea>
+											<div class="invalid-feedback">Please provide Awards.</div>
+											<p class="errorclass" th:if="${#fields.hasErrors('awards')}"
+												th:errors="*{awards}" />
+										</div>
+									</div>
+
+
+
+
+								</div>
+								<div class="jumbotron col-md-6 bg-transparent">
+									<div class="row mb-2">
+										<div class="col-md-3 text-end fw-bold">
+											<label for="termscheckbox" class="form-label"></label>
+										</div>
+										<div class="col-md-9">
+											<div class="form-check">
+												<input class="form-check-input" type="checkbox" value=""
+													id="invalidCheck" required> <label
+													class="form-check-label" for="invalidCheck">Above is best truth in my knowledge </label>
+												<div class="invalid-feedback">You must confirm and agree to it</div>
+											</div>
+										</div>
+									</div>
+								</div>
+
+							</div>
+
+							<div class="row mb-4">
+							<button class="btn btn-danger fw-bold" id="profilesubmitbutton"
+								type="submit">
+								<i class="fas fa-check-double fa-2x"></i> Submit
+							</button>
+						</div>
+						</form>
+
+					</div>
+					
+					<h5 class="fw-bold text-primary">Terms and Conditions</h5>
+					<p th:text="${userprofiletermsconditions}"></p>
+					
+				</div>
+				
+				
+			</div>
+		</div>
+	</div>
+
+
+
+
+</body>
+
+</html>

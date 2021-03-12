@@ -1,0 +1,357 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{layouts/layout}">
+<head>
+<title>Springboot Rocks</title>
+</head>
+
+<body class="d-flex flex-column h-100">
+	<div layout:fragment="content">
+
+
+		<nav
+			class="navbar navbar-expand py-0 navbar-dark bg-dark navbar-custom">
+			<div class="container-fluid">
+				<div class="col-md-6 float-start">
+					<h4 class="m-0 text-danger">My Profile</h4>
+				</div>
+				<div class="col-md-6 align-middle mt-3">
+					<ol class="breadcrumb float-end">
+						<li class="breadcrumb-item text-danger"><a href="/"
+							th:href="@{/}"> Home</a></li>
+						<li class="breadcrumb-item active">My Profile</li>
+					</ol>
+				</div>
+			</div>
+		</nav>
+
+
+		<div class="row">
+			<div class="col-12 col-md-12 col-lg-12">
+				<div class="card themed-card">
+					<div class="card-header card-header-nobg">
+						<div class="d-flex align-items-center justify-content-between">
+							<h3 class="float-start">My Profile</h3>
+
+							<!-- 							<a class="btn btn-sm btn-success" href="/userEdit" -->
+							<!-- 								th:href="@{/userEdit}"><i class="fas fa-plus"></i> Add user</a> -->
+
+
+						</div>
+
+					</div>
+					<div class="card-content">
+
+
+
+
+
+
+						<div th:if="${#strings.isEmpty(noProfileFound)}">
+							<div class="col-md-3" data-aos="fade-up">
+								<div class="card themed-card">
+
+									<div class="card-body box-profile">
+										<div class="text-center">
+											<h5 >No Profile Found</h5>
+											<div class="card-footer text-bold">
+												<a th:href="@{/appUserProfile}"
+													class="btn btn-primary btn-block bg-primary font-weight-bolder">Create
+													Profile</a>
+											</div>
+										</div>
+									</div>
+								</div>
+
+							</div>
+						</div>
+						<div class="col-lg-12">
+							<div th:if="${not #strings.isEmpty(noProfileFound)}">
+								<div class="row">
+									<div class="col-md-3 px-1" data-aos="fade-up-left">
+
+										<div class="card themed-card">
+											<div class="card-body box-profile">
+												<div class="text-center">
+													<div th:if="${appuserprofile.profilepic == null}">
+														<i class="fas fa-user-alt fa-4x" style="color: gray"></i>
+														<!--			<img class="profile-user-img img-fluid img-circle" -->
+														<!--				src="img/user4-128x128.jpg" alt="User profile picture" width="100" height="100"> -->
+
+													</div>
+
+													<div th:if="${appuserprofile.profilepic != null}">
+														<img class="img-profile rounded-circle"
+															th:src="@{'/appUserProfile/' + ${appuserprofile.id} + '/appUserProfileimage'}"
+															width="128" height="128" />
+													</div>
+													<a
+														th:href="@{'/appUserProfile/' + ${appuserprofile.id} + '/image'}"
+														role="button" class="text-primary" data-bs-toggle="modal"
+														data-bs-target="#profilePicModal">Change Picture</a>
+
+
+												</div>
+
+												<hr />
+
+												<h5 class="fw-bold text-center"
+													th:text="${appuserprofile.designation}">Principal
+													Architect</h5>
+
+												<ul class="list-group list-group-unbordered mb-3">
+													<li class="list-group-item float-start"><b>Followers</b>
+														<a class="float-right text-muted nounderline float-end"
+														th:text="${appuserprofile.followers}">1,322</a></li>
+													<li class="list-group-item float-start"><b>Friends</b>
+														<a class="float-right text-muted nounderline float-end"
+														th:text="${appuserprofile.friends}">543</a></li>
+													<li class="list-group-item float-start"><b>Fans</b> <a
+														class="float-right text-muted nounderline float-end"
+														th:text="${appuserprofile.fans}">13,287</a></li>
+													<li class="list-group-item float-start"><b>Last
+															Updated</b> <a
+														class="float-right text-muted nounderline float-end"
+														th:text="${appuserprofile.datemodified}">0</a></li>
+													<li class="list-group-item text-center mt-2"><a
+														th:href="@{'/appUserProfile/' + ${appuserprofile.id}}"
+														role="button" class="btn btn-sm btn-danger btn-block"><b>Edit
+																Profile</b></a></li>
+												</ul>
+
+											</div>
+										</div>
+									</div>
+
+
+									<div class="col-md-9 px-1" data-aos="fade-up">
+
+										<ul class="nav nav-pills mb-3" id="pills-tab" role="tablist">
+											<li class="nav-item" role="presentation">
+												<button class="nav-link active" id="AboutMe"
+													data-bs-toggle="pill" data-bs-target="#pills-home"
+													type="button" role="tab" aria-controls="pills-home"
+													aria-selected="true">
+													<i class="far fa-address-card text-primary"></i> AboutMe
+												</button>
+											</li>
+											<li class="nav-item" role="presentation">
+												<button class="nav-link" id="Awards" data-bs-toggle="pill"
+													data-bs-target="#pills-profile" type="button" role="tab"
+													aria-controls="pills-profile" aria-selected="false">
+													<i class="fas fa-award text-primary"></i> Awards
+												</button>
+											</li>
+											<li class="nav-item" role="presentation">
+												<button class="nav-link" id="Whitepapers"
+													data-bs-toggle="pill" data-bs-target="#pills-contact"
+													type="button" role="tab" aria-controls="pills-contact"
+													aria-selected="false">
+													<i class="fas fa-file-alt text-primary"></i> White papers
+												</button>
+											</li>
+											<li class="nav-item" role="presentation">
+												<button class="nav-link" id="Testimonials"
+													data-bs-toggle="pill" data-bs-target="#pills-links"
+													type="button" role="tab" aria-controls="pills-links"
+													aria-selected="false">
+													<i class="far fa-comments text-primary"></i> Testimonials
+												</button>
+											</li>
+											<li class="nav-item" role="presentation">
+												<button class="nav-link" id="Inventions"
+													data-bs-toggle="pill" data-bs-target="#pills-chart"
+													type="button" role="tab" aria-controls="pills-chart"
+													aria-selected="false">
+													<i class="fas fa-cube text-primary"></i> Inventions
+												</button>
+											</li>
+										</ul>
+
+										<div class="tab-content" id="pills-tabContent">
+											<div class="tab-pane fade show active" id="pills-home"
+												role="tabpanel" aria-labelledby="AboutMe">
+
+
+												<div class="card themed-card">
+													<div class="mycontent">
+														<strong class="text-primary"> Nick Name</strong>
+
+														<p th:text="${appuserprofile.nickname}">FirstName
+															LastName</p>
+
+														<hr />
+														<strong class="text-primary"><i class="fas fa-book mr-1"></i>
+															Education</strong>
+
+														<p 
+															th:text="${appuserprofile.education}">Education</p>
+
+														<hr />
+
+														<strong class="text-primary"><i class="fas fa-map-marker-alt mr-1"></i>
+															Location</strong>
+
+														<p th:text="${appuserprofile.location}">
+															Location</p>
+
+														<hr />
+
+														<strong class="text-primary"><i class="fas fa-pencil-alt mr-1"></i>
+															Skills</strong>
+
+														<p th:text="${appuserprofile.skills}">
+															Skills</p>
+
+														<hr />
+
+														<strong class="text-primary"><i class="far fa-file-alt mr-1"></i>
+															Notes</strong>
+
+														<p th:text="${appuserprofile.notes}">
+															Some Text Goes Here</p>
+													</div>
+												</div>
+
+
+
+											</div>
+
+
+											<div class="tab-pane fade" id="pills-profile" role="tabpanel"
+												aria-labelledby="Awards">
+												<div class="card themed-card">
+													<p th:text="${appuserprofile.awards}">Some
+														Text Goes Here</p>
+												</div>
+<!-- 												<div class="card themed-card"> -->
+<!-- 													<h5 class="fw-bold text-primary">Lorem ipsum dolor</h5> -->
+<!-- 													<p>Lorem ipsum dolor sit amet, consectetur adipiscing -->
+<!-- 														elit, sed do eiusmod tempor incididunt ut labore et dolore -->
+<!-- 														magna aliqua. Ut enim ad minim veniam, quis nostrud -->
+<!-- 														exercitation ullamco laboris nisi ut aliquip ex ea commodo -->
+<!-- 														consequat. Duis aute irure dolor in reprehenderit in -->
+<!-- 														voluptate velit esse cillum dolore eu fugiat nulla -->
+<!-- 														pariatur. Excepteur sint occaecat cupidatat non proident, -->
+<!-- 														sunt in culpa qui officia deserunt mollit anim id est -->
+<!-- 														laborum.</p> -->
+<!-- 												</div> -->
+											</div>
+
+											<div class="tab-pane fade" id="pills-contact" role="tabpanel"
+												aria-labelledby="Whitepapers">
+												<div class="card themed-card">
+													<p 
+														th:text="${appuserprofile.whitepapers}">Some Text Goes
+														Here</p>
+												</div>
+<!-- 												<div class="card themed-card"> -->
+<!-- 													<h5 class="fw-bold text-primary">Lorem ipsum dolor</h5> -->
+<!-- 													<p>Lorem ipsum dolor sit amet, consectetur adipiscing -->
+<!-- 														elit, sed do eiusmod tempor incididunt ut labore et dolore -->
+<!-- 														magna aliqua. Ut enim ad minim veniam, quis nostrud -->
+<!-- 														exercitation ullamco laboris nisi ut aliquip ex ea commodo -->
+<!-- 														consequat. Duis aute irure dolor in reprehenderit in -->
+<!-- 														voluptate velit esse cillum dolore eu fugiat nulla -->
+<!-- 														pariatur. Excepteur sint occaecat cupidatat non proident, -->
+<!-- 														sunt in culpa qui officia deserunt mollit anim id est -->
+<!-- 														laborum.</p> -->
+<!-- 												</div> -->
+											</div>
+											<div class="tab-pane fade" id="pills-links" role="tabpanel"
+												aria-labelledby="Whitepapers">
+												<div class="card themed-card">
+													<p 
+														th:text="${appuserprofile.testimonials}">Some Text
+														Goes Here</p>
+												</div>
+<!-- 												<div class="card themed-card"> -->
+<!-- 													<h5 class="fw-bold text-primary">Lorem ipsum dolor</h5> -->
+<!-- 													<p>Lorem ipsum dolor sit amet, consectetur adipiscing -->
+<!-- 														elit, sed do eiusmod tempor incididunt ut labore et dolore -->
+<!-- 														magna aliqua. Ut enim ad minim veniam, quis nostrud -->
+<!-- 														exercitation ullamco laboris nisi ut aliquip ex ea commodo -->
+<!-- 														consequat. Duis aute irure dolor in reprehenderit in -->
+<!-- 														voluptate velit esse cillum dolore eu fugiat nulla -->
+<!-- 														pariatur. Excepteur sint occaecat cupidatat non proident, -->
+<!-- 														sunt in culpa qui officia deserunt mollit anim id est -->
+<!-- 														laborum.</p> -->
+<!-- 												</div> -->
+											</div>
+											<div class="tab-pane fade" id="pills-chart" role="tabpanel"
+												aria-labelledby="Inventions">
+												<div class="card themed-card">
+													<p 
+														th:text="${appuserprofile.inventions}">Some Text Goes
+														Here</p>
+												</div>
+<!-- 												<div class="card themed-card"> -->
+<!-- 													<h5 class="fw-bold text-primary">Lorem ipsum dolor</h5> -->
+<!-- 													<p>Lorem ipsum dolor sit amet, consectetur adipiscing -->
+<!-- 														elit, sed do eiusmod tempor incididunt ut labore et dolore -->
+<!-- 														magna aliqua. Ut enim ad minim veniam, quis nostrud -->
+<!-- 														exercitation ullamco laboris nisi ut aliquip ex ea commodo -->
+<!-- 														consequat. Duis aute irure dolor in reprehenderit in -->
+<!-- 														voluptate velit esse cillum dolore eu fugiat nulla -->
+<!-- 														pariatur. Excepteur sint occaecat cupidatat non proident, -->
+<!-- 														sunt in culpa qui officia deserunt mollit anim id est -->
+<!-- 														laborum.</p> -->
+<!-- 												</div> -->
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+
+					</div>
+					<h5 class="fw-bold text-primary">Terms and Conditions</h5>
+					<p th:text="${userprofiletermsconditions}"></p>
+
+				</div>
+			</div>
+		</div>
+
+
+
+
+		<div class="modal fade" id="profilePicModal" tabindex="-1"
+			aria-labelledby="profilePicModalLabel" aria-hidden="true">
+			<div class="modal-dialog modal-dialog-centered">
+				<div class="modal-content">
+					<div class="modal-header modal-header-danger">
+						<h5 class="modal-title" id="exampleModalLabel">Update Profile Picture</h5>
+						<button type="button" class="btn-close close" data-bs-dismiss="modal"
+							aria-label="Close"></button>
+					</div>
+					<form action="/appUserProfile/${currentUserId}/image" method="post" enctype="multipart/form-data"
+						th:action="@{'/appUserProfile/' + ${currentUserId} + '/image'}">
+						<div class="modal-body">
+
+							<label class="control-label">Select Picture</label> <input
+								id="userPicturefile" name="userPicturefile" type="file"
+								class="file" accept="image/x-png,image/gif,image/jpeg"> <br /> <br />
+
+						</div>
+						<div class="modal-footer">
+							<button type="button" class="btn btn-sm btn-secondary"
+								data-bs-dismiss="modal">Close</button>
+							<button type="submit" class="btn btn-sm btn-danger">Update
+								Picture</button>
+						</div>
+					</form>
+				</div>
+			</div>
+		</div>
+
+
+
+
+
+	</div>
+
+
+
+</body>
+</html>
